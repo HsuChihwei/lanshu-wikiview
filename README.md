@@ -1,4 +1,4 @@
-# LanSu WikiView
+# LanShu WikiView
 
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js" />
@@ -37,8 +37,8 @@
 
 ```bash
 # Clone
-git clone https://github.com/cclank/lansu-wiki-web.git
-cd lansu-wiki-web
+git clone https://github.com/cclank/lanshu-wiki-web.git
+cd lanshu-wiki-web
 
 # Install
 pnpm install
@@ -51,7 +51,7 @@ Open [http://localhost:3000](http://localhost:3000) and enter any GitHub repo UR
 
 ## Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cclank/lansu-wiki-web)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cclank/lanshu-wiki-web)
 
 Zero-config deployment. Optionally add `GITHUB_TOKEN` environment variable to increase API rate limits.
 

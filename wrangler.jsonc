@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "lansu-wiki-web",
+  "name": "lanshu-wiki-web",
   "compatibility_date": "2026-05-01",
   "compatibility_flags": [
     "nodejs_compat",
@@ -14,7 +14,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "lansu-wiki-web"
+      "service": "lanshu-wiki-web"
     }
   ],
   "images": {

@@ -73,7 +73,7 @@ export default function Home() {
       {/* Top-right: social icons + theme toggle */}
       <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5">
         <a
-          href="https://github.com/cclank/lansu-wiki-web"
+          href="https://github.com/cclank/lanshu-wiki-web"
           target="_blank"
           rel="noopener noreferrer"
           className="icon-shine p-2 rounded-lg hover:bg-bg-hover text-text-tertiary hover:text-text-secondary transition-colors"

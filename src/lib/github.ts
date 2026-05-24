@@ -83,7 +83,7 @@ export async function fetchRepoTree(
     {
       headers: {
         Accept: "application/vnd.github.v3+json",
-        "User-Agent": "lansu-wiki-web",
+        "User-Agent": "lanshu-wiki-web",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       next: { revalidate: 300 }, // cache for 5 mins
@@ -114,7 +114,7 @@ export async function fetchFileContent(
   const res = await fetch(
     `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${path}`,
     {
-      headers: { "User-Agent": "lansu-wiki-web" },
+      headers: { "User-Agent": "lanshu-wiki-web" },
       next: { revalidate: 300 },
     }
   );
