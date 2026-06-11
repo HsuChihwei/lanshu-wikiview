@@ -7,23 +7,13 @@ import {
   findUserByPhone,
   createUser,
   createToken,
+  isExpired,
+  expiresAtISO,
 } from "@/lib/db-queries";
 
 const PHONE_REGEX = /^1[3-9]\d{9}$/;
 const MAX_ATTEMPTS = 5;
 const TOKEN_EXPIRY_SECONDS = 7 * 24 * 60 * 60; // 7 days
-
-function isExpired(expiresAt: string): boolean {
-  return new Date(expiresAt.replace(" ", "T")).getTime() < Date.now();
-}
-
-function expiresAtISO(seconds: number): string {
-  return new Date(Date.now() + seconds * 1000)
-    .toISOString()
-    .replace("T", " ")
-    .replace("Z", "")
-    .replace(/\.\d{3}$/, "");
-}
 
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as { phone?: string; code?: string };
@@ -44,7 +34,6 @@ export async function POST(request: NextRequest) {
     return Response.json({ message: "验证码错误" }, { status: 401 });
   }
 
-  // Check expiry
   if (isExpired(record.expires_at)) {
     return Response.json(
       { message: "验证码已过期，请重新获取" },
@@ -52,7 +41,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Check max attempts
   if (record.attempts >= MAX_ATTEMPTS) {
     await deleteVerificationCode(db, phone);
     return Response.json(
@@ -61,13 +49,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Check code match
   if (record.code !== code) {
     await incrementVerificationAttempts(db, phone);
     return Response.json({ message: "验证码错误" }, { status: 401 });
   }
 
-  // Code is valid — clean up
   await deleteVerificationCode(db, phone);
 
   // Find or create user
@@ -85,7 +71,7 @@ export async function POST(request: NextRequest) {
   crypto.getRandomValues(tokenBytes);
   const token = Array.from(tokenBytes, (b) => b.toString(16).padStart(2, "0")).join("");
   const tokenId = crypto.randomUUID();
-  const expiresAt = expiresAtISO(TOKEN_EXPIRY_SECONDS);
+  const expiresAt = expiresAtISO(TOKEN_EXPIRY_SECONDS / 60);
 
   await createToken(db, tokenId, user.id, token, expiresAt);
 

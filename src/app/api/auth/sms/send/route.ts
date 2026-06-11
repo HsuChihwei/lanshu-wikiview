@@ -57,8 +57,10 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Generate 6-digit code
-  const code = String(Math.floor(100000 + Math.random() * 900000));
+  // Generate 6-digit code using cryptographically secure random
+  const codeDigits = new Uint8Array(6);
+  crypto.getRandomValues(codeDigits);
+  const code = Array.from(codeDigits, (b) => (b % 10).toString()).join("");
   const id = crypto.randomUUID();
 
   await upsertVerificationCode(db, id, phone, code, clientIP);

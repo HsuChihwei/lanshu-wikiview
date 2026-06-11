@@ -22,7 +22,7 @@ CREATE INDEX idx_tokens_user_id ON tokens(user_id);
 
 CREATE TABLE IF NOT EXISTS verification_codes (
   id TEXT PRIMARY KEY,
-  phone TEXT NOT NULL,
+  phone TEXT UNIQUE NOT NULL,
   code TEXT NOT NULL,
   ip TEXT NOT NULL DEFAULT '',
   attempts INTEGER NOT NULL DEFAULT 0,

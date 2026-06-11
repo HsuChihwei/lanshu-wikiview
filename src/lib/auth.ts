@@ -1,10 +1,6 @@
 import { getDB } from "@/lib/db";
-import { findTokenByValue } from "@/lib/db-queries";
+import { findTokenByValue, isExpired } from "@/lib/db-queries";
 import type { User } from "@/lib/db-types";
-
-function isExpired(expiresAt: string): boolean {
-  return new Date(expiresAt.replace(" ", "T")).getTime() < Date.now();
-}
 
 export interface AuthResult {
   authenticated: true;
@@ -41,7 +37,6 @@ export async function authenticate(
     return { authenticated: false, error: "Token expired" };
   }
 
-  // Look up user
   const user = await db
     .prepare("SELECT * FROM users WHERE id = ?")
     .bind(record.user_id)

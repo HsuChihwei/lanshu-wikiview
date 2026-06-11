@@ -4,12 +4,16 @@ function nowISO(): string {
   return new Date().toISOString().replace("T", " ").replace("Z", "").replace(/\.\d{3}$/, "");
 }
 
-function expiresAtISO(minutes: number): string {
+export function expiresAtISO(minutes: number): string {
   return new Date(Date.now() + minutes * 60_000)
     .toISOString()
     .replace("T", " ")
     .replace("Z", "")
     .replace(/\.\d{3}$/, "");
+}
+
+export function isExpired(expiresAt: string): boolean {
+  return new Date(expiresAt.replace(" ", "T")).getTime() < Date.now();
 }
 
 // ─── Users ───
@@ -97,4 +101,9 @@ export async function deleteVerificationCode(db: D1Database, phone: string): Pro
 export async function cleanExpiredVerificationCodes(db: D1Database): Promise<void> {
   const now = nowISO();
   await db.prepare("DELETE FROM verification_codes WHERE expires_at < ?").bind(now).run();
+}
+
+export async function cleanExpiredTokens(db: D1Database): Promise<void> {
+  const now = nowISO();
+  await db.prepare("DELETE FROM tokens WHERE expires_at < ?").bind(now).run();
 }
