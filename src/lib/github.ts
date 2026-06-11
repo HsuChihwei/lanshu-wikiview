@@ -63,7 +63,7 @@ export { parseGitHubUrl };
 
 function getGitHubToken(): string | undefined {
   try {
-    const token = (getCloudflareContext().env as Record<string, unknown>)
+    const token = (getCloudflareContext().env as unknown as Record<string, unknown>)
       .GITHUB_TOKEN;
     if (typeof token === "string" && token) return token;
   } catch {
@@ -94,7 +94,7 @@ export async function fetchRepoTree(
     throw new Error(`GitHub API error: ${res.status} ${res.statusText}`);
   }
 
-  const data = await res.json();
+  const data = (await res.json()) as { tree: { type: string; path: string; url: string }[] };
   return data.tree
     .filter(
       (item: { type: string; path: string }) =>

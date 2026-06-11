@@ -28,7 +28,7 @@ function LocalWikiContent() {
           `/api/wiki/local?path=${encodeURIComponent(dirPath)}`
         );
         if (!res.ok) {
-          const err = await res.json();
+          const err = (await res.json()) as { error?: string };
           throw new Error(err.error || "Failed to load local wiki");
         }
         setData(await res.json());

@@ -23,7 +23,7 @@ export default function GitHubWikiPage({
           `/api/wiki?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}`
         );
         if (!res.ok) {
-          const err = await res.json();
+          const err = (await res.json()) as { error?: string };
           throw new Error(err.error || "Failed to load wiki");
         }
         setData(await res.json());
