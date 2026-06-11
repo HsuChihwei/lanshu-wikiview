@@ -2,6 +2,7 @@
   "name": "lanshu-wiki-web",
   "version": "0.1.0",
   "private": true,
+  "main": "dist-electron/main.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +10,11 @@
     "lint": "eslint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && wrangler deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "electron:compile": "tsc -p electron",
+    "electron:prepare": "node scripts/copy-static.mjs",
+    "electron:dev": "next build && node scripts/copy-static.mjs && tsc -p electron && electron .",
+    "electron:build": "next build && node scripts/copy-static.mjs && tsc -p electron && electron-builder"
   },
   "dependencies": {
     "3d-force-graph": "^1.80.0",
@@ -37,6 +42,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "electron": "^37.0.0",
+    "electron-builder": "^25.1.8",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
