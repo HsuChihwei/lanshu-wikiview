@@ -19,5 +19,13 @@
   ],
   "images": {
     "binding": "IMAGES"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lanshu-wiki-db",
+      "database_id": "placeholder-change-after-wrangler-d1-create",
+      "migrations_dir": "migrations"
+    }
+  ]
 }
